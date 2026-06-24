@@ -361,3 +361,121 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ============================================================
+# SENSITIVE FILES - KHÔNG ĐƯỢC ĐẨY LÊN GIT
+# ============================================================
+
+# Connection strings có chứa mật khẩu DB
+**/appsettings.*.local.json
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/appsettings.Staging.json
+**/appsettings.*.Production.json
+
+# File secrets của user (chứa connection string, API key...)
+secrets.json
+**/secrets.json
+appsettings.secrets.json
+
+# File môi trường .env
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+
+# File certificate / private key
+*.pfx
+*.p12
+*.key
+*.pem
+*.cer
+*.snk
+
+# File chứa token, API key, OAuth secret
+**/credentials.json
+**/credentials.txt
+**/*credentials*
+**/api-keys.json
+**/api-keys.txt
+**/secrets/
+**/*.secret
+**/*.secret.json
+**/private/
+**/private.json
+
+# File backup / dump database (có thể chứa dữ liệu nhạy cảm)
+*.bak
+*.sql
+*.dump
+*.db
+*.sqlite
+*.sqlite3
+*.mdf
+*.ldf
+*.ndf
+*.bak.sql
+
+# User-specific Visual Studio settings (chứa đường dẫn local, account...)
+*.user
+*.suo
+*.userosscache
+*.userprefs
+
+# File cấu hình IDE riêng của từng máy
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# File upload tạm (người dùng upload lên server)
+wwwroot/uploads/
+wwwroot/files/
+wwwroot/images/users/
+wwwroot/documents/
+
+# Log có thể chứa thông tin nhạy cảm (token, password trong exception...)
+*.log
+logs/
+*.log.*
+
+# File publish chứa connection string
+*.pubxml.user
+*.publishsettings
+PublishProfiles/
+
+# Docker / Kubernetes secrets
+**/docker-compose.override.yml
+**/docker-compose.*.yml
+**/.docker/
+docker-secrets/
+k8s-secrets/
+
+# Azure / AWS credentials (nếu có)
+.azure/
+.aws/
+**/azure-keys.json
+**/aws-credentials
+
+# File dump/process của Windows (có thể chứa thông tin nhạy cảm)
+*.tmp
+*.temp
+~$*
+*.stackdump
+
+# File sinh ra từ tooling (Swagger, EF Core migrations test...)
+**/wwwroot/swagger/
+**/bin/Debug/
+**/bin/Release/
+
+# ============================================================
+# QUAN TRỌNG: Nếu đã lỡ commit những file trên trước đó
+# thì .gitignore KHÔNG xóa khỏi history được.
+# Phải dùng: git rm --cached <file> rồi commit lại.
+# Hoặc dùng git filter-branch / BFG Repo-Cleaner.
+# ============================================================
