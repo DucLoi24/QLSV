@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
+using QLSV.Models;
 
 var builder = WebApplication.CreateBuilder(args); // Tạo một đối tượng WebApplicationBuilder để cấu hình ứng dụng web
 
@@ -15,6 +17,10 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Cấu hình DbContext
+builder.Services.AddDbContext<QLSVContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("QLSV")));
+
 // JSON Serializer Settings
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
@@ -24,21 +30,18 @@ builder.Services.AddControllersWithViews()
     });
 
 builder.Services.AddControllers();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-app.UseCors(options => options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()); // Kích hoạt CORS để cho phép truy cập từ các nguồn khác nhau
+app.UseCors();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
