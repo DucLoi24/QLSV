@@ -30,7 +30,7 @@ namespace QLSV.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateSinhVien([FromBody] SinhVien sinhVien)
+        public IActionResult CreateSinhVien(SinhVien sinhVien)
         {
             _db.SinhViens.Add(sinhVien);
             _db.SaveChanges();
@@ -38,34 +38,35 @@ namespace QLSV.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateSinhVien(string id, [FromBody] SinhVien sinhVien)
+        public IActionResult UpdateSinhVien(string id, SinhVien sinhVien)
         {
-            var existingSinhVien = _db.SinhViens.Find(id);
-            if (existingSinhVien == null)
+            var sv = _db.SinhViens.Find(id);
+            if (sv == null)
             {
                 return NotFound();
             }
-            existingSinhVien.HoTen = sinhVien.HoTen;
-            existingSinhVien.NgayThangNamSinh = sinhVien.NgayThangNamSinh;
-            existingSinhVien.GioiTinh = sinhVien.GioiTinh;
-            existingSinhVien.QueQuan = sinhVien.QueQuan;
-            existingSinhVien.MaLop = sinhVien.MaLop;
-            existingSinhVien.Sdt = sinhVien.Sdt;
-            existingSinhVien.Email = sinhVien.Email;
-            existingSinhVien.NgayNhapHoc = sinhVien.NgayNhapHoc;
-            existingSinhVien.TrangThai = sinhVien.TrangThai;
+            sv.HoTen = sinhVien.HoTen;
+            sv.NgayThangNamSinh = sinhVien.NgayThangNamSinh;
+            sv.GioiTinh = sinhVien.GioiTinh;
+            sv.QueQuan = sinhVien.QueQuan;
+            sv.MaLop = sinhVien.MaLop;
+            sv.Sdt = sinhVien.Sdt;
+            sv.Email = sinhVien.Email;
+            sv.NgayNhapHoc = sinhVien.NgayNhapHoc;
+            sv.TrangThai = sinhVien.TrangThai;
             _db.SaveChanges();
             return NoContent();
         }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteSinhVien(string id)
         {
-            var existingSinhVien = _db.SinhViens.Find(id);
-            if (existingSinhVien == null)
+            var sv = _db.SinhViens.Find(id);
+            if (sv == null)
             {
                 return NotFound();
             }
-            _db.SinhViens.Remove(existingSinhVien);
+            _db.SinhViens.Remove(sv);
             _db.SaveChanges();
             return NoContent();
         }
