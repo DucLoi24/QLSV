@@ -88,6 +88,9 @@ public partial class QLSVContext : DbContext
             entity.Property(e => e.TenGiangVien)
                 .IsRequired()
                 .HasMaxLength(100);
+            entity.Property(e => e.TrangThai)
+                .HasColumnName("TrangThai")
+                .HasDefaultValue(true);
 
             entity.HasOne(d => d.MaKhoaNavigation).WithMany(p => p.GiangViens)
                 .HasForeignKey(d => d.MaKhoa)

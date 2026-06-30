@@ -21,6 +21,9 @@ public partial class GiangVien
 
     public DateOnly? NgayVaoTruong { get; set; }
 
+    // true = đang hoạt động, false = đã nghỉ (soft delete)
+    public bool? TrangThai { get; set; }
+
     public virtual ICollection<HocPhan> HocPhans { get; set; } = new List<HocPhan>();
 
     public virtual ICollection<LopHoc> LopHocs { get; set; } = new List<LopHoc>();

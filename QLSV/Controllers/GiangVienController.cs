@@ -16,10 +16,13 @@ namespace QLSV.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllGiangViens()
+        public IActionResult GetAllGiangViens([FromQuery] bool includeInactive = false)
         {
-            var ds = _db.GiangViens.ToList();
-            return Ok(ds);
+            var query = _db.GiangViens.AsQueryable(); // Tạo query rỗng để nối được chuỗi truy vấn
+            if (!includeInactive)
+                query = query.Where(gv => gv.TrangThai == true || gv.TrangThai == null); // Lọc giảng viên đang hoạt động
+
+            return Ok(query.ToList());
         }
 
         [HttpGet("{id}")]
@@ -51,6 +54,7 @@ namespace QLSV.Controllers
             gv.Email = giangVien.Email;
             gv.GioiTinh = giangVien.GioiTinh;
             gv.NgayVaoTruong = giangVien.NgayVaoTruong;
+            gv.TrangThai = giangVien.TrangThai;
             _db.SaveChanges();
             return NoContent();
         }
@@ -63,7 +67,23 @@ namespace QLSV.Controllers
             {
                 return NotFound();
             }
-            _db.GiangViens.Remove(gv);
+
+            // Soft delete
+            gv.TrangThai = false;
+            _db.SaveChanges();
+
+            return NoContent();
+        }
+
+        // Endpoint phục hồi giảng viên đã bị soft delete
+        [HttpPatch("{id}/restore")]
+        public IActionResult RestoreGiangVien(string id)
+        {
+            var gv = _db.GiangViens.Find(id);
+            if (gv == null)
+                return NotFound();
+
+            gv.TrangThai = true;
             _db.SaveChanges();
             return NoContent();
         }
