@@ -66,6 +66,13 @@ namespace QLSV.Controllers
             {
                 return NotFound();
             }
+
+            var dangKyHocPhans = _db.DangKyHocPhans.Where(d => d.MaSv == id).ToList();
+            if (dangKyHocPhans.Any())
+            {
+                _db.DangKyHocPhans.RemoveRange(dangKyHocPhans);
+            }
+
             _db.SinhViens.Remove(sv);
             _db.SaveChanges();
             return NoContent();
