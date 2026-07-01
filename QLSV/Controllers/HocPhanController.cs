@@ -41,7 +41,7 @@ namespace QLSV.Controllers
             return CreatedAtAction(nameof(GetHocPhanById), new { id = hocPhan.MaHp }, hocPhan);
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult UpdateHocPhan (string id,  HocPhan hocPhan)
         {
             var hp = _db.HocPhans.Find(id);
