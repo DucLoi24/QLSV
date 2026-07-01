@@ -49,7 +49,7 @@ namespace QLSV.Controllers
             {
                 return NotFound();
             }
-            hp.MaMh = hocPhan.MaHp;
+            hp.MaMh = hocPhan.MaMh;
             hp.MaGv = hocPhan.MaGv;
             hp.HocKy = hocPhan.HocKy;
             hp.NamHoc = hocPhan.NamHoc;
