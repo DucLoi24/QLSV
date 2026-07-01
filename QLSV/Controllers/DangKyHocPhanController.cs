@@ -22,10 +22,10 @@ namespace QLSV.Controllers
             return Ok(ds);
         }
 
-        [HttpGet("{id}")]
-        public IActionResult GetDangKyHocPhanById(string id)
+        [HttpGet("{maHp}/{maSv}")]
+        public IActionResult GetDangKyHocPhanById(string maHp, string maSv)
         {
-            var dk = _db.DangKyHocPhans.Find(id);
+            var dk = _db.DangKyHocPhans.Find(new object[] {maHp, maSv});
             if (dk == null)
             {
                 return NotFound();
@@ -38,13 +38,13 @@ namespace QLSV.Controllers
         {
             _db.Add(dangKyHocPhan);
             _db.SaveChanges();
-            return CreatedAtAction(nameof(GetDangKyHocPhanById), new { id = dangKyHocPhan.MaHp, dangKyHocPhan });
+            return CreatedAtAction(nameof(GetDangKyHocPhanById), new { maHp = dangKyHocPhan.MaHp, maSv = dangKyHocPhan.MaSv }, dangKyHocPhan);
         }
 
-        [HttpPut]
-        public IActionResult UpdateDangKyHocPhan(string id, DangKyHocPhan dangKyHocPhan)
+        [HttpPut("{maHp}/{maSv}")]
+        public IActionResult UpdateDangKyHocPhan(string maHp, string maSv, DangKyHocPhan dangKyHocPhan)
         {
-            var dkhp = _db.DangKyHocPhans.Find(id);
+            var dkhp = _db.DangKyHocPhans.Find(new object[] {maHp, maSv});
             if (dkhp == null)
             {
                 return NotFound();
@@ -60,10 +60,10 @@ namespace QLSV.Controllers
             return NoContent();
         }
 
-        [HttpDelete]
-        public IActionResult DeleteDangKyHocPhan(string id)
+        [HttpDelete("{maHp}/{maSv}")]
+        public IActionResult DeleteDangKyHocPhan(string maHp, string maSv)
         {
-            var dkhp = _db.DangKyHocPhans.Find(id);
+            var dkhp = _db.DangKyHocPhans.Find(new object[] {maHp, maSv});
             if (dkhp == null)
             {
                 return NotFound();
