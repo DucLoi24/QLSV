@@ -49,6 +49,37 @@ namespace QLSV.Controllers
             {
                 return NotFound();
             }
+
+            decimal? cc = dangKyHocPhan.DiemChuyenCan;
+            decimal? gk = dangKyHocPhan.DiemGiuaKy;
+            decimal? ck = dangKyHocPhan.DiemCuoiKy;
+
+            if (cc < 0 || cc > 10 || gk < 0 || gk > 10 || ck < 0 || ck > 10)
+            {
+                return BadRequest("Điểm phải nằm trong khoảng từ 0 đến 10.");
+            }
+
+            if (cc.HasValue && gk.HasValue && ck.HasValue)
+            {
+                dangKyHocPhan.DiemTongKet = Math.Round((cc.Value * 0.1m + gk.Value * 0.3m + ck.Value * 0.6m), 2);
+                if (dangKyHocPhan.DiemTongKet >= 8.5m)
+                {
+                    dangKyHocPhan.XepLoai = "Giỏi";
+                }
+                else if (dangKyHocPhan.DiemTongKet >= 7.0m)
+                {
+                    dangKyHocPhan.XepLoai = "Khá";
+                }
+                else if (dangKyHocPhan.DiemTongKet >= 5.0m)
+                {
+                    dangKyHocPhan.XepLoai = "Trung bình";
+                }
+                else
+                {
+                    dangKyHocPhan.XepLoai = "Yếu";
+                }
+            }
+
             dkhp.NgayDangKy = dangKyHocPhan.NgayDangKy;
             dkhp.TrangThai = dangKyHocPhan.TrangThai;
             dkhp.DiemChuyenCan = dangKyHocPhan.DiemChuyenCan;
